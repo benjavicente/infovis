@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Acerca de - Repositorios - BV</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/github-dark-dimmed.min.css" />
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js" onload="hljs.highlightAll()"></script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body class="about-page">
+		<main>
+			<h1>Acerca de la visualización</h1>
+			<p>Puedes volver a la visualización principal <a href="../">aquí</a>.</p>
+			<h2>Resumen</h2>
+			<p>
+				Estas visualizaciones muestra la actividad de usuarios u organizaciones de GitHub, mostrando los commits realizados durante los
+				últimos años. Los datos se obtienen de repositorios de Git públicos mediante un script que utiliza la API de GitHub.
+			</p>
+			<p>
+				El script que se utilizó para la obtención de datos y el código de la visualización se encuentran en
+				<a href="https://github.com/benjavicente/infovis"><code>github.com/benjavicente/infovis</code></a
+				>.
+			</p>
+			<h2>Informe</h2>
+			<p>
+				Esta sección corresponde al informe de la entrega del examen de visualización de información IIC2026 2022-2. Cada sección
+				corresponde a un nivel del modelo anidado de Tamara Munzner (“A Nested Model for Visualization Design and Validation”, 2009).
+			</p>
+			<h3>Caracterización del dominio</h3>
+			<p>
+				Se decidió trabajar con datos de repositorios de Git públicos de GitHub, dado que se quería explorar la actividad de ciertas
+				organizaciones en sus diferentes utilizando los commits como referencia.
+			</p>
+			<details>
+				<summary>¿Qué es un commit, Git y GitHub?</summary>
+				<div>
+					<p>
+						Un commit es un conjunto de cambios realizados en un proyecto de software. Estos son transacciones que se realizan en un sistema
+						de versionamiento de código, como Git. Cada commit tiene ciertos atributos, como al autor y la fecha de creación.
+					</p>
+					<p>
+						GitHub es una plataforma que permite almacenar repositorios de Git públicos o privados, además de permitir la colaboración entre
+						usuarios.
+					</p>
+				</div>
+			</details>
+			<p>
+				Para esto, se creó un script que toma como input el usuario u organización de GitHub (el <i>login</i>) y entrega datos con el
+				siguiente estructura (usando TypeScript):
+			</p>
+			<pre><code class="language-typescript">interface Change {
+	add: string;
+	del: string;
+	file: string;
+}
+
+interface Commit {
+	/** Nombre del repositorio */
+	repo: string;
+	/** Nombre del autor */
+	name: string;
+	/** Fecha del commit */
+	date: string;
+	/** Mensaje del commit */
+	commit: string;
+	/** Hash del commit */
+	hash: string;
+	/** Cambios en el commit */
+	changes: Change[];
+}</code></pre>
+			<p>
+				Como se puede observar, los datos utilizados para este trabajo tienen un formato tabular, donde cada fila representa cada commit
+				realizado.
+			</p>
+			<p>Existió un pequeño pre-procesamiento de los datos, limitando la fecha de creación a los commits.</p>
+			<p>
+				Es importante notar, que dado que el dataset requiere tiene de input el <i>login</i>, se puede crear multiples datasets y tener por
+				tanto varias visualizaciones.
+			</p>
+			<p>
+				El objetivo de realizar una visualización de estos datos es poder entender como se ha desarrollado un proyecto u organización a lo
+				largo del tiempo, y poder comparar la actividad de diferentes organizaciones y usuarios distintos dentro de estas.
+			</p>
+			<h3>Abstracción de datos y tareas</h3>
+			<p>Para la visualización, se definieron las siguientes tareas:</p>
+			<dl>
+				<dt id="t1">Analizar la actividad que ha tenido una organización o usuario en sus repositorios a lo largo del tiempo.</dt>
+				<dd>
+					Dado la cantidad de commits, y las fechas y cantidad de cambios de estos, se podrá <b>descubrir</b> como ha cambiado la actividad
+					de una organización o usuario a lo largo del <b>tiempo</b>.
+				</dd>
+				<dt id="t2">Consultar la actividad de repositorios de una organización o usuario.</dt>
+				<dd>
+					Se podrá <b>comparar</b> la actividad entre diferentes repositorios o usuarios según cantidad de commits y cantidad de cambios.
+				</dd>
+				<dt id="t3">Resumir los repositorios y su desarrollo en los últimos años.</dt>
+				<dd>
+					A grandes rasgos, se podrá ver <b>rápidamente información de repositorios</b>, como cuales activos, cuales han sido los
+					mantenedores de estos y cual es el lenguaje que se usa.
+				</dd>
+			</dl>
+			<h4>Abstracción de datos</h4>
+			<p>Para esta visualización, solo existen datos de tipo item (los commits), que contienen los siguientes tipos de atributos:</p>
+			<table class="cols-3">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Tipo</th>
+						<th>Descripción</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<code>repo</code>
+						</td>
+						<td>Categórico</td>
+						<td>Nombre del repositorio</td>
+					</tr>
+					<tr>
+						<td>
+							<code>name</code>
+						</td>
+						<td>Categórico</td>
+						<td>Nombre del autor</td>
+					</tr>
+					<tr>
+						<td>
+							<code>date</code>
+						</td>
+						<td>Temporal</td>
+						<td>Fecha del commit</td>
+					</tr>
+					<tr>
+						<td>
+							<code>commit</code>
+						</td>
+						<td>Texto</td>
+						<td>Mensaje del commit</td>
+					</tr>
+					<tr>
+						<td>
+							<code>hash</code>
+						</td>
+						<td>Texto</td>
+						<td>Hash del commit</td>
+					</tr>
+					<tr>
+						<td>
+							<code>changes</code>
+						</td>
+						<td>Compuesto</td>
+						<td>
+							Cambios en el commit, que contiene los siguientes atributos:
+							<ul>
+								<li><code>add</code>: Cantidad de líneas agregadas (cuantitativo)</li>
+								<li><code>del</code>: Cantidad de líneas eliminadas (cuantitativo)</li>
+								<li><code>file</code>: Nombre del archivo (categórico, determina el lenguaje)</li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				Dentro de la visualización, se realizan procesamientos de datos, una sobre sobre commits en repositorios y otras sobre commits de
+				usuarios.
+			</p>
+			<p>
+				Para la calificación de commits sobre repositorios,se realiza una suma entre <code>add</code> y <code>del</code> (usando escala con
+				raíz cuadrada) para obtener un atributo <code>count</code>.
+			</p>
+			<p>
+				Por el otro lado, para la agregación de commits por usuario, se agrupa los commits por autor y fecha, quedando 3 atributos:
+				<code>name</code>, <code>date</code> y <code>count</code>.
+			</p>
+			<h3>Codificación visual y de interacción</h3>
+			<!--  marcas, canales, idioms visuales, idioms de in- teraccio ́n y decisiones de disen ̃o -->
+			<p>Para la codificación, se utilizó lo siguiente para codificar y presentar los datos:</p>
+			<ul class="cod-list">
+				<li>
+					<div>
+						<span class="type">Idiom visual:</span>
+						<span class="cod">Treemap de commits</span>
+					</div>
+					<div>
+						Para representar sus commits se utilizó este tipo de visualización, lo que permite realizar comparaciones sobre el usuario u
+						organización, permitiendo realizar la <a href="#t2">segunda tarea</a> de comparación de commits. Se podría considerar la
+						agrupación que provee el treemap como un canal del repositorio.
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Marca rectangulo:</span>
+						<span class="cod">Representación de un Commit</span>
+					</div>
+					<div>Es la marca utilizada en treemaps como el realizado.</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Canal de matriz de colores:</span>
+						<span class="cod">Color del bloque de un commit</span>
+					</div>
+					<div>
+						Dado esto, se puede observar cuales son los lenguajes más utilizados tanto por repositorio como por usuario, resumiendo parte
+						del desarrollo de estos (<a href="#t3">tercera tarea</a>).
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Canal de tamaño:</span>
+						<span class="cod">Tamaño de un bloque de un commit</span>
+					</div>
+					<div>
+						Además de la distribución que provee el treemap, la escala de raíz cuadrada permite identificar y comparar cuales son los
+						commits con más cambios (<a href="#t2">segunda tarea</a>).
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Idiom de interacción:</span>
+						<span class="cod">Selección de un repositorio</span>
+					</div>
+					<div>
+						Esto permite enfocarse en el resumen de un repositorio en particular y ver el desarrollo de este en el tiempo, apoyando a la
+						<a href="#t1">primera</a> y <a href="#t2">tercera</a> tarea.
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Idiom de interacción:</span>
+						<span class="cod">Panel de información de un commit en hover</span>
+					</div>
+					<div>
+						Para entregar más contexto del commit, se muestra a la derecha del treemap el mensaje del commit, el nombre del repositorio, el
+						nombre del autor junto al lenguaje principal del cambio, y la lista de cambios realizados en este. Esto permite consultar con
+						mayor detalle la información de un commit, apoyando al resumen de la información (<a href="#t3">tercera tarea</a>).
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Decisión de diseño:</span>
+						<span class="cod">Color correspondiente a cada lenguaje</span>
+					</div>
+					<div>Se eligió utilizar un color comunmente asociado a cada lenguaje, para que sea más fácil identificarlos y compararlos.</div>
+				</li>
+				<hr />
+				<li>
+					<div>
+						<span class="type">Idiom visual:</span>
+						<span class="cod">Grilla de meses de actividad de un contribuidor</span>
+					</div>
+					<div>
+						Para la <a href="#t1">primera tarea</a>, se decidió utiliza una grilla para mostrar la linea de actividad de los últimos años en
+						un eje y en otro eje los usuarios correspondientes a cada cambio.
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Marca rectángulo:</span>
+						<span class="cod">Representación de un grupo de contribuciones</span>
+					</div>
+					<div>
+						Al igual que la otra visualización, se utiliza un rectángulo para representar la información, que en este caso es un grupo de
+						commits de un usuario en un mes en particular.
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Canal de luminosidad de colores:</span>
+						<span class="cod">Tono de color de un mes de un contribuidor</span>
+					</div>
+					<div>
+						Se utiliza una escala de color monocromática para representar la actividad (cantidad de commits) de un usuario en un mes en
+						particular.
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Canal de posición:</span>
+						<span class="cod">Posición de un bloque de un mes de un contribuidor</span>
+					</div>
+					<div>
+						Se utiliza el eje X para representar el mes y el eje Y para representar el usuario, de esta forma se puede comparar la actividad
+						de un usuario en un mes en particular con el resto de los usuarios (<a href="#t1">primera tarea</a>).
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Idiom de interacción:</span>
+						<span class="cod">Brush de selección de meses</span>
+					</div>
+					<div>
+						Se utiliza un brush para seleccionar un rango de meses, de esta forma se puede comparar la actividad de una organización en un
+						rango de meses en particular con el resto de los usuarios (<a href="#t1">primera tarea</a>).
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Idiom de interacción:</span>
+						<span class="cod">Hover en el nombre de un contribuidor</span>
+					</div>
+					<div>
+						Se puede hacer hover en el nombre de un contribuidor para mostrar que commits realizó en el rango de meses seleccionado,
+						consultando la información de un usuario en particular (<a href="#t2">segunda tarea</a>).
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Idiom de interacción:</span>
+						<span class="cod">Botón para reiniciar selección</span>
+					</div>
+					<div>
+						Para tener una opción clara de volver al estado original, se añadió un botón para reiniciar la selección de meses y repositorio.
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="type">Decisión de diseño:</span>
+						<span class="cod">Order de contribuidores de forma descendiente</span>
+					</div>
+					<div>
+						Se ordeno el eje de contribuidores de la visualización de la grilla para mostrar los usuarios con más contribuciones primero en
+						el contexto seleccionado.
+					</div>
+				</li>
+			</ul>
+		</main>
+	</body>
+</html>

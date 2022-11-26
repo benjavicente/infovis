@@ -1,0 +1,27 @@
+{
+	"name": "gh-organization-stats",
+	"version": "0.1.0",
+	"description": "Visualization of statistics about some GitHub organizations",
+	"author": "Benjamín Vicente <benjavicente@uc.cl>",
+	"license": "MIT",
+	"type": "module",
+	"private": true,
+	"bin": {
+		"gh-organization-stats": "bin/gh-organization-stats"
+	},
+	"scripts": {
+		"generate": "node bin/gh-organization-stats"
+	},
+	"dependencies": {
+		"args": "^5.0.3",
+		"d3": "^7.6.1",
+		"octokit": "^2.0.10",
+		"progress": "^2.0.3",
+		"zx": "^7.1.1"
+	},
+	"devDependencies": {
+		"@types/d3": "^7.4.0",
+		"prettier": "^2.7.1",
+		"prettier-plugin-jsdoc": "^0.4.2"
+	}
+}
