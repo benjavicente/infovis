@@ -1,0 +1,148 @@
+body {
+	margin: 0;
+	min-height: 100vh;
+	min-height: 100dvh;
+	background: hsl(207, 100%, 86%);
+	padding: 3em 2em;
+	--tone-color: 35deg;
+}
+
+main {
+	background: hsl(205, 100%, 95%);
+}
+
+.categories {
+	background: hsl(var(--tone-color), 50%, 90%);
+	padding: 10px;
+}
+
+.categories h2 {
+	text-align: center;
+}
+
+/* Frames Visualization */
+#frames {
+	display: grid;
+	gap: 30px;
+	--frame-width: 8em;
+	--frame-height: 10em;
+	grid-template-columns: repeat(auto-fit, minmax(var(--frame-width), 1fr));
+	grid-auto-rows: 1fr;
+	justify-items: center;
+	align-items: center;
+}
+
+.frame-border {
+	width: calc(var(--frame-width) + var(--size) * 2);
+	height: calc(var(--frame-height) + var(--size) * 2);
+	--percentage-displacement: 0;
+	transition: box-shadow 0.5s ease-in-out;
+	box-shadow: 2px 2px 5px 0px #00000080, inset -1px 0px 3px 0px hsl(var(--tone-color) 0% 80%);
+	background-color: var(--color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.frame {
+	margin: auto auto;
+	background: hsl(0, 0%, 95%);
+	width: var(--frame-width);
+	height: var(--frame-height);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: inset -1px 0px 3px 0px hsl(var(--tone-color) 0% 80%);
+}
+
+.frame-border:hover {
+	--percentage-displacement: -1.2em;
+	cursor: pointer;
+	box-shadow: 3px 3px 8px 2px #00000080, inset -1px 0px 3px 0px hsl(var(--tone-color) 0% 80%);
+}
+
+.category-name {
+	text-align: center;
+	text-decoration: underline;
+}
+
+.gender {
+	height: 6em;
+	width: 6em;
+	position: relative;
+}
+
+.gender {
+	z-index: 1;
+}
+
+.female {
+	background: hsl(328, 100%, 62%);
+}
+
+.male {
+	background: hsl(79, 100%, 42%);
+}
+
+.gender-percentage {
+	z-index: 0;
+	position: absolute;
+	left: 0;
+	transition: all 0.5s ease;
+}
+
+.female-percentage {
+	color: hsl(328, 100%, 62%);
+	top: var(--percentage-displacement);
+}
+
+.male-percentage {
+	bottom: var(--percentage-displacement);
+	color: hsl(79, 100%, 42%);
+}
+
+/* Flowers Visualization */
+#flowers {
+	--opacity: 1;
+	--col-width: 80px;
+	--max-cols: 10;
+	display: grid;
+	max-width: calc(var(--col-width) * var(--max-cols));
+	margin: auto;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(max(var(--col-width), 100% / var(--max-cols)), 1fr)
+	);
+}
+
+.flower-container {
+	opacity: var(--opacity);
+	transition: opacity 0.5s ease-out;
+}
+
+.flower-container:hover {
+	opacity: 1;
+}
+
+.flower {
+	width: var(--col-width);
+}
+
+.flower:hover {
+	opacity: 1;
+}
+
+.artist-name {
+	text-align: center;
+}
+
+#filters-container {
+	opacity: 0.5;
+	transition: opacity 0.5s ease-out;
+	display: flex;
+	gap: 4px;
+}
+
+#filters-container.active {
+	opacity: 1;
+}

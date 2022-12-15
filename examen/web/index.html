@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Repositorios - BV</title>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"
+			integrity="sha512-MefNfAGJ/pEy89xLOFs3V6pYPs6AmUhXJrRlydI/9wZuGrqxmrdQ80zKHUcyadAcpH67teDZcBeS6oMJLPtTqw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script defer src="./vis.js"></script>
+		<link rel="stylesheet" href="./styles.css" />
+
+		<meta name="title" content="Repositorios - BV" />
+		<meta
+			name="description"
+			content="Visualización realizada en el examen del curso de visualización de información. La visualización muestra un un treemap y un grid como fue la actividad de una organización o GtiHub en los últimos años."
+		/>
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://benjavicente.github.io/infovis/examen/" />
+		<meta property="og:title" content="Examen: Actividad de Repositorios de GitHub" />
+		<meta
+			property="og:description"
+			content="Visualización realizada en el examen del curso de visualización de información. La visualización muestra un un treemap y un grid como fue la actividad de una organización o GtiHub en los últimos años."
+		/>
+		<meta property="og:image" content="https://benjavicente.github.io/infovis/examen/vis.png" />
+		<meta property="og:site_name" content="benjavicente/infovis" />
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content="https://benjavicente.github.io/infovis/examen/" />
+		<meta property="twitter:title" content="Examen: Actividad de Repositorios de GitHub" />
+		<meta
+			property="twitter:description"
+			content="Visualización realizada en el examen del curso de visualización de información. La visualización muestra un un treemap y un grid como fue la actividad de una organización o GtiHub en los últimos años."
+		/>
+		<meta property="twitter:image" content="https://benjavicente.github.io/infovis/examen/vis.png" />
+	</head>
+	<body class="vis-page">
+		<h1>¿Como se han movido las organizaciones de GitHub en los últimos años?</h1>
+		<div class="info">
+			Visualización sobre la actividad de diferentes organizaciones o usuarios de GitHub, utilizando datos públicos de commits.
+			<a href="./about/">Más información de la visualización</a>. Cualquier comentario es aceptado en @benjavicente en Telegram. El código
+			fue probado en Chrome, en otros navegadores puede no funcionar correctamente.
+		</div>
+		<ul class="vis-list">
+			<li>
+				<h2>Open Source UC</h2>
+				<div class="org-commits-vis" data-login="open-source-uc"></div>
+			</li>
+			<li>
+				<h2>D3</h2>
+				<div class="org-commits-vis" data-login="d3"></div>
+			</li>
+			<li>
+				<h2>Remix</h2>
+				<div class="org-commits-vis" data-login="remix-run"></div>
+			</li>
+			<li>
+				<h2>Vercel</h2>
+				<div class="org-commits-vis" data-login="vercel"></div>
+			</li>
+			<li>
+				<h2>Benjamín Vicente 👋</h2>
+				<div class="org-commits-vis" data-login="benjavicente"></div>
+			</li>
+		</ul>
+	</body>
+</html>

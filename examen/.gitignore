@@ -1,0 +1,6 @@
+/.cache
+/.vscode
+/data
+node_modules
+pnpm-lock.yaml
+

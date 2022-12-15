@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tarea 2 - BV</title>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"
+			integrity="sha512-MefNfAGJ/pEy89xLOFs3V6pYPs6AmUhXJrRlydI/9wZuGrqxmrdQ80zKHUcyadAcpH67teDZcBeS6oMJLPtTqw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script defer src="./index.js"></script>
+		<link rel="stylesheet" href="../_styles.css" />
+	</head>
+	<body>
+		<h1>Tarea 2</h1>
+		<section class="categories">
+			<h2>Cuadros</h2>
+			<div id="frames"></div>
+		</section>
+		<section>
+			<h2>Flores</h2>
+			<div id="filters-container">
+				<label>
+					Ordenar
+					<select name="order" id="order-select">
+						<option default value="random">al azar</option>
+						<option value="original">por el orden inicial</option>
+						<option value="name">por nombre</option>
+						<option value="age">por edad</option>
+						<option value="amount">por obras</option>
+					</select>
+				</label>
+				<label>
+					Solo artistas vivos
+					<input type="checkbox" id="only-alive" />
+				</label>
+				<button disabled id="reset-filters-element" type="button">Eliminar opciones</button>
+			</div>
+			<div id="flowers"></div>
+		</section>
+	</body>
+</html>

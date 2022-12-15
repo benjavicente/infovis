@@ -1,0 +1,264 @@
+* {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	min-height: 100dvh;
+	font-family: system, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ul {
+	padding: 0;
+}
+
+li {
+	list-style-type: none;
+}
+
+.vis-page {
+	padding: 1rem;
+}
+
+.vis-page h1 {
+	padding: 0 1em;
+	text-align: center;
+	max-width: 40rem;
+	margin: 5rem auto 1rem auto;
+}
+
+.vis-page a {
+	font-weight: bold;
+	text-decoration: none;
+	color: #10066d;
+}
+
+.vis-page a:hover {
+	text-decoration: underline;
+}
+
+.vis-page .info {
+	text-align: center;
+	max-width: 40rem;
+	margin: 0 auto;
+}
+
+.vis-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+}
+
+.vis-list h2 {
+	text-align: center;
+}
+
+.vis-list > li:has(.org-commits-vis) {
+	padding: 1rem;
+	border: black 2px solid;
+	border-radius: 1rem;
+	max-width: 80rem;
+	width: fill-available;
+	width: -webkit-fill-available;
+}
+
+.org-commits-vis {
+	display: grid;
+	grid-template-columns: 75% 25%;
+	grid-template-rows: auto 0.5fr 0.5fr 1fr;
+	gap: 0.1rem;
+	grid-template-areas:
+		"  controls   controls"
+		"    tree      commit"
+		"    tree       info"
+		"contributors   info";
+}
+
+.org-commits-vis-tree {
+	grid-area: tree;
+}
+
+.org-commits-vis-contributors {
+	grid-area: contributors;
+}
+
+.org-commits-vis-controls {
+	grid-area: controls;
+}
+
+.org-commits-vis-info {
+	grid-area: info;
+}
+
+.org-commits-vis-commit {
+	grid-area: commit;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.org-commits-vis-commit .commit-info {
+	flex: 1 1 0;
+	overflow: hidden;
+}
+
+.org-commits-vis-tree .repo {
+	transition: opacity 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.org-commits-vis-tree:hover .repo:not(:hover) {
+	opacity: 0.5;
+}
+
+.vis-info-lang-color {
+	color: white;
+	padding: 2px 4px;
+}
+
+.commit-info {
+	background: lightgray;
+	border-radius: 1rem;
+	padding: 0.5rem 1rem;
+}
+
+.commit-info * {
+	margin: 0;
+}
+
+.commit-info-change {
+	list-style: square;
+	margin-left: 1rem;
+}
+
+.commit-info:has(.waiting-selection) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.commit-info-change {
+	/* Only 1 line */
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.about-page {
+	background-image: url("./tree.svg") transparent;
+	background: #e8e8e8;
+}
+
+.about-page main {
+	background: #f1f1f1;
+	max-width: 42rem;
+	margin: 0 auto;
+	padding: 2rem 1rem;
+}
+
+.about-page h1 {
+	text-align: center;
+	text-decoration: wavy underline;
+	text-decoration-color: rebeccapurple;
+}
+
+.about-page h2 {
+	text-decoration: underline;
+}
+
+.about-page h2,
+.about-page h3 {
+	margin: 1rem 0 0.5rem 0;
+}
+
+.about-page p {
+	margin: 0.5rem 0;
+}
+
+.about-page details {
+	border: solid 2px #929292;
+	overflow: clip;
+	border-radius: 0.5rem;
+}
+
+.about-page details > summary {
+	background: #e6e6e6;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 0.5rem 0.8rem;
+}
+
+.about-page details > summary:hover {
+	text-decoration: underline;
+}
+
+.about-page details > :not(summary) {
+	padding: 0.2rem 0.5rem;
+}
+
+table.cols-3 td:nth-child(1) {
+	text-align: right;
+}
+
+table.cols-3 td:nth-child(2) {
+	text-align: center;
+}
+
+pre > code {
+	border-radius: 0.5rem;
+	margin: 0.5rem;
+}
+
+:not(pre) > code {
+	background: #d7d7d7;
+	padding: 0.05rem 0.4rem;
+	margin: 0.1rem 0.2rem;
+	border-radius: 0.2rem;
+	font-size: 1rem;
+}
+
+dl dt {
+	padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+	border-left: #10066d 4px solid;
+	border-bottom: #10066d 2px solid;
+	margin: 0.6rem 0 0.2rem 0;
+	background: #e6e6e6;
+	font-weight: bold;
+}
+
+dl dd + dt {
+	margin-top: 0.5rem;
+}
+
+dl dd {
+	margin-left: 0rem;
+	padding-left: 0.5rem;
+}
+
+.cod-list li {
+	margin-bottom: 1rem;
+}
+
+.cod-list li > div:first-child {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.cod-list li > div:nth-child(2) {
+	margin-left: 1rem;
+}
+
+.cod-list li .type {
+	color: #6a6971;
+}
+
+.cod-list li .cod {
+	font-weight: bold;
+}
+
+b {
+	font-weight: normal;
+	color: #10066d;
+}
